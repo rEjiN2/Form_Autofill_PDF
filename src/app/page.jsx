@@ -49,11 +49,11 @@ const FormSend = () => {
       height:'100vh',
       gap:'2rem'
     }}>
+      <Typography fontSize='25px' color='red'>*Only work with PDF contain name and message in it(Like Passport or any ID cards)*</Typography>
     <Box
       
     >
       <form onSubmit={handleSubmit} style={{display:'flex' ,alignItems:'center',justifyContent:'center',gap:'2rem'}}>
-        
         
         <input
           type="file"
