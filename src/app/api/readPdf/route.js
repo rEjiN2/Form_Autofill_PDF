@@ -18,6 +18,7 @@ export const POST = async (request) => {
     const pdfData = await pdf(buffer);
     const text = pdfData.text;
 
+    console.log(text,"hitex");
     // Split the text by "Message" to separate "Name" and "Message" fields
     const textParts = text.split("Message");
 

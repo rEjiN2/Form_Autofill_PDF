@@ -9,16 +9,20 @@ import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
+import styles from './page.module.css'
+
 const FormSend = () => {
   const [file,setfile] = useState(null)
   const [name,setName] = useState('')
   const [message,setMessage] =useState('')
+  const [loading,setLoading] = useState(false)
 
  
 
 
 
   const handleSubmit = async(event) => {
+    setLoading(true)
     event.preventDefault();
     if(!file) return
 
@@ -33,9 +37,13 @@ const FormSend = () => {
       const response = await res.json()
       setName(response?.name || ''); 
       setMessage(response?.message || '');
+      if(res.ok){
+        setLoading(false)
+      }
       
     }catch(err){
       console.log(err.message);
+      setLoading(false)
     }
    
   };
@@ -45,9 +53,10 @@ const FormSend = () => {
       display: 'flex',   
       flexDirection:'column',
       alignItems: 'center',
-      justifyContent: 'center',
+       justifyContent: 'center',
       height:'100vh',
-      gap:'2rem'
+      gap:'2rem',
+      backgroundImage:'url(/bg.jpg)'
     }}>
       <Typography fontSize='25px' color='red'>*Only work with PDF contain name and message in it(Like Passport or any ID cards)*</Typography>
     <Box
@@ -77,25 +86,22 @@ const FormSend = () => {
           Selected File: {file?.name}
         </Typography>
         
-        <Button type="submit" variant="contained" color="primary">
+        <Button disabled={loading} type="submit" variant="contained" color="primary">
           Submit
         </Button>
+       {loading && <div className={styles.loader}></div> } 
       </form>
     </Box>
-    <Box sx={{display:'flex',gap:'2rem'}}>
+    <Box sx={{display:'flex',flexDirection:'column',gap:'2rem'}}>
       <TextField  
       label="Name"
-      sx={{width:'200px'}}
+      fullWidth
       value={name}
       />
       <TextField 
       label="Message"
-      
-      InputProps={{
-        style:{
-          width:'200px',height:'300px',    
-        }
-      }}
+      multiline
+      rows={5}
       value={message}
       />
       
